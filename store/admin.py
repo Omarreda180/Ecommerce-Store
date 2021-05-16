@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Product
+from .models import Category, Product, Variation
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -13,3 +13,9 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ['is_available', 'category']
     list_editable = ['price', 'is_available', 'stock']
     readonly_fields = ['created', 'updated', ]
+
+@admin.register(Variation)
+class VariationAdmin(admin.ModelAdmin):
+    list_display = ['product', 'variation_category', 'variation_value', 'is_active']
+    list_filter = ['product', 'variation_category', 'is_active']
+    list_editable = ['is_active']
