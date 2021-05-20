@@ -4591,9 +4591,11 @@ input[type=button].btn-block {
 
 .pagination {
   display: flex;
+  width: 25%;
   padding-left: 0;
   list-style: none;
   border-radius: 0.37rem;
+  margin: auto;
 }
 
 .page-link {
@@ -4605,6 +4607,7 @@ input[type=button].btn-block {
   color: #3167eb;
   background-color: #fff;
   border: 1px solid #dee2e6;
+  
 }
 .page-link:hover {
   z-index: 2;
@@ -4646,10 +4649,12 @@ input[type=button].btn-block {
   padding: 0.75rem 1.5rem;
   font-size: 1.25rem;
   line-height: 1.5;
+  
 }
 .pagination-lg .page-item:first-child .page-link {
   border-top-left-radius: 0.45rem;
   border-bottom-left-radius: 0.45rem;
+  
 }
 .pagination-lg .page-item:last-child .page-link {
   border-top-right-radius: 0.45rem;

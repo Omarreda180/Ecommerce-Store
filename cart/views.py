@@ -28,7 +28,7 @@ def add_cart(request, product_id):
                 pass
 
     try:
-        cart = Cart.objects.get(cart_id=_cart_id(request)) # get the cart using the cart_id present in the session 
+        cart = Cart.objects.get(cart_id=_cart_id(request)) # get the cart using the cart_id present in the session
     except Cart.DoesNotExist:
         cart = Cart.objects.create(cart_id=_cart_id(request))
 
@@ -37,7 +37,7 @@ def add_cart(request, product_id):
     is_cart_item_exist = CartItem.objects.filter(product=product, cart=cart).exists()
     if is_cart_item_exist:
         cart_item = CartItem.objects.filter(product=product, cart=cart)
-        # existing_variation ==> database 
+        # existing_variation ==> database
         # current variation ==> product_variation
         # item_id ==> database
         ex_var_list = []
@@ -46,9 +46,9 @@ def add_cart(request, product_id):
             existing_variation = item.variation.all()
             ex_var_list.append(list(existing_variation))
             id.append(item.id)
-        
+
         print(ex_var_list)
-        
+
         if product_variation in ex_var_list:
             # increase the cart item quantity
             index = ex_var_list.index(product_variation)
@@ -57,7 +57,7 @@ def add_cart(request, product_id):
             item.quantity += 1
             item.save()
         else:
-            item = CartItem.objects.create(product=product, quantity=1, cart=cart)    
+            item = CartItem.objects.create(product=product, quantity=1, cart=cart)
             if len(product_variation) > 0 :
                 item.variation.clear()
                 item.variation.add(*product_variation)
@@ -73,7 +73,7 @@ def add_cart(request, product_id):
             cart_item.variation.clear()
             cart_item.variation.add(*product_variation)
         cart_item.save()
-    
+
     return redirect('cart:cart')
 
 
@@ -101,7 +101,7 @@ def remove_cart_item(request, product_id, cart_item_id):
     return redirect('cart:cart')
 
 
-def cart(request, total_price=0, quantity=0, cart_items=None):
+def cart(request,total=0, total_price=0, quantity=0, cart_items=None):
     try:
         cart = Cart.objects.get(cart_id=_cart_id(request))
         cart_items = CartItem.objects.filter(cart=cart, is_active=True)
