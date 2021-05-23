@@ -9,7 +9,7 @@
     <!-- ============================ COMPONENT 1 ================================= -->
 
     <div class="row">
-      <aside class="col-lg-9">
+      <aside class="col-lg-8">
         {% if not cart_items %}
         <div class="alert alert-danger text-center" role="alert">
           Your cart empty! <a href="{% url 'store:store' %}"><b>Shopping Now</b></a>
@@ -34,22 +34,13 @@
                     <div class="aside"><img src="{{ cart_item.product.image.url }}" class="img-sm"></div>
                     <figcaption style="margin-top:-40px" class="info">
                       <b><a class="text-top" href="{{ cart_item.product.get_prodcut_details_url }}" class="title text-dark">{{cart_item.product.name}}</a></b>
-                      <!--
-                      <p class="text-muted small">
-                      {% if cart_item.variation.all %}
-                        {% for item in cart_item.variation.all %}
-                          {{ item.variation_category | lower }} : {{item.variation_value | capfirst}} <br>
-                        {% endfor %}
-                      {% endif %}
-                      </p>
-                      -->
                     </figcaption>
                   </figure>
                 </td>
                 <td>
                   {% if cart_item.variation.all %}
                         {% for item in cart_item.variation.all %}
-                          {{ item.variation_category | lower }} : {{item.variation_value | capfirst}} <br>
+                          <b>{{item.variation_value | capfirst}}</b> <br>
                         {% endfor %}
                       {% endif %}
                 </td>
@@ -91,7 +82,7 @@
         </div> <!-- card.// -->
         {% endif %}
       </aside> <!-- col.// -->
-      <aside class="col-lg-3">
+      <aside class="col-lg-4">
 
         <div class="card">
           <div class="card-body">
@@ -101,7 +92,7 @@
             </dl>
             <dl class="dlist-align">
               <dt>Tax:</dt>
-              <dd class="text-right"> $10.00</dd>
+              <dd class="text-right"> ${{tax}}</dd>
             </dl>
             <dl class="dlist-align">
               <dt>Total:</dt>

@@ -167,6 +167,8 @@ def remove_cart_item(request, product_id, cart_item_id):
 
 def cart(request,total=0, total_price=0, quantity=0, cart_items=None):
     try:
+        
+
         if request.user.is_authenticated:
             cart_items = CartItem.objects.filter(user=request.user, is_active=True)
         else:
@@ -175,7 +177,15 @@ def cart(request,total=0, total_price=0, quantity=0, cart_items=None):
         for cart_item in cart_items:
             total_price += (cart_item.product.price * cart_item.quantity)
             quantity += cart_item.quantity
-        total = total_price + 10
+                
+        grand_total = 0
+        tax = 0
+        for cart_item in cart_items:
+            total += (cart_item.product.price * cart_item.quantity)
+            quantity += cart_item.quantity
+        tax = round(((2 * total)/100), 2)
+        grand_total = total + tax
+        total = grand_total
 
     except ObjectDoesNotExist:
         pass # just ignore
@@ -185,6 +195,7 @@ def cart(request,total=0, total_price=0, quantity=0, cart_items=None):
         'quantity': quantity,
         'cart_items':cart_items,
         'total': total,
+        'tax':tax,
     }
     return render(request, 'store/cart/cart.html', context)
 
