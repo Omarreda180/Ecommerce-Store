@@ -50,6 +50,13 @@ class Order(models.Model):
 
     def full_address(self):
         return f'{self.address_line_1} {self.address_line_2}'
+
+    def order_created(self):
+        return self.created_at.strftime('%B %d %Y')
+
+    def hour_update(self):
+        return self.created_at.strftime('%H:%M %p')
+
         
     def __str__(self):
         return self.first_name
@@ -73,3 +80,6 @@ class OrderProduct(models.Model):
     def total_product_price(self):
         x = self.quantity * self.product_price
         return x
+
+    def hour_update(self):
+        return self.created_at.strftime('%H:%M %p')

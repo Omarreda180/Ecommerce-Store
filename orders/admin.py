@@ -1,9 +1,14 @@
 from django.contrib import admin
 from .models import Payment, Order, OrderProduct
+from django.utils.html import format_html
+
 
 class OrderProdcutInline(admin.TabularInline):
+    def thumbnail(self, object):
+        return format_html('<img src="{}" width="75" height="110">'.format(object.product.image.url))
+    thumbnail.short_description = 'Product Picture'
     model = OrderProduct
-    readonly_fields = ['payment', 'user', 'product', 'quantity', 'ordered', 'product_price']
+    readonly_fields = ['thumbnail','product','variations','product_price', 'quantity','user','payment',    'ordered',  ]
     extra = 0
 
 @admin.register(Order)
@@ -23,3 +28,13 @@ class OrderProductAdmin(admin.ModelAdmin):
 
 admin.site.register(Payment)
 
+
+# 
+# 
+# @admin.register(UserProfile)
+# class UserProfileAdmin(admin.ModelAdmin):
+#     def thumbnail(self, object):
+#         return format_html('<img src="{}" width="30" style="border-radius:50%;">'.format(object.profile_picture.url))
+#     thumbnail.short_description = 'Profile Picture'
+#     list_display = ('thumbnail', 'user', 'city', 'state', 'country')
+# 
