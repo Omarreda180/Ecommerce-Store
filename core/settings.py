@@ -1,13 +1,14 @@
 from pathlib import Path
+from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = 'django-insecure-&o%#b2x5nh-fmq6qxuxoq1zuubyqwp_6+zdmw*+fgs%119vi84'
+SECRET_KEY = config('SECRET_KEY')
 
-DEBUG = True
+DEBUG = config('DEBUG',default=True, cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['ecommerce-shop-env.eba-tyuqgtyd.us-west-2.elasticbeanstalk.com']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -21,6 +22,8 @@ INSTALLED_APPS = [
     'accounts',
     'cart',
     'orders',
+    'admin_honeypot',
+
 ]
 
 MIDDLEWARE = [
@@ -112,12 +115,11 @@ MESSAGE_TAGS = {
 }
 
 
-# GMAIL SMTP
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'omar90180360@gmail.com'
-EMAIL_HOST_PASSWORD = '20708077r'
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_PORT = config('EMAIL_PORT', cast=int)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
 
 PASSWORD_RESET_TIMEOUT_DAYS = 1
 

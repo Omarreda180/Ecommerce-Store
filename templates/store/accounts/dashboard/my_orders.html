@@ -40,7 +40,7 @@
                 <td>${{order.order_total}}</td>
                 <td>{{order.order_created}}</td>
                 <td>{{order.hour_update}}</td>
-                <td><b><a href='{% url "accounts:order_detail" order.order_number%}'>View Detail</a></b></td>
+                <td><b><a href='{% url "accounts:order_detail" order.order_number%}'>View Details</a></b></td>
               </tr>
               
               {% endfor %}

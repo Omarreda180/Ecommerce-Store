@@ -3,7 +3,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
 from django.db.models import Q
 
-from .models import Product, Category, ReviewRating
+from .models import Product, Category, ReviewRating, ProductGallery
 from .forms import ReviewForm
 from cart.models import CartItem
 from cart.views import _cart_id
@@ -13,8 +13,12 @@ from orders.models import OrderProduct
 
 def home(request):
     products = Product.objects.all().filter(is_available=True)
+
+    for product in products:
+        reviews = ReviewRating.objects.order_by('-updated_at').filter(product_id=product.id, status=True)
     context = {
         'products' : products,
+        'product':product,
     } 
 
     return render(request, 'store/index.html', context)
@@ -22,6 +26,7 @@ def home(request):
 def store(request, category_slug=None):
     categories = None
     products = None
+    product = None
 
     if category_slug != None:
         categories = get_object_or_404(Category, slug=category_slug)
@@ -30,16 +35,22 @@ def store(request, category_slug=None):
         page = request.GET.get('page')
         paged_products = paginator.get_page(page)
         products_count = products.count()
+        for product in products:
+            reviews = ReviewRating.objects.order_by('-updated_at').filter(product_id=product.id, status=True)
     else:
         products = Product.objects.all().filter(is_available=True)
         paginator = Paginator(products, 6)
         page = request.GET.get('page')
         paged_products = paginator.get_page(page)
         products_count = products.count()
-        
+        for product in products:
+            reviews = ReviewRating.objects.order_by('-updated_at').filter(product_id=product.id, status=True)
+            
+    
     context = {
         'products': paged_products,
         'products_count' : products_count,
+        'product':product,
     }
     return render(request, 'store/store/store.html', context)
 
@@ -60,17 +71,21 @@ def product_details(request, category_slug, product_details_slug):
         orderproduct = None
     
     reviews = ReviewRating.objects.order_by('-updated_at').filter(product_id=single_product.id, status=True)
+    product_gallery = ProductGallery.objects.filter(product_id=single_product.id)
 
     context = {
         'single_product': single_product,
         'in_cart': in_cart,
         'orderproduct':orderproduct,
         'reviews':reviews,
+        'product_gallery':product_gallery,
     }
     return render(request, 'store/store/product_details.html', context)
 
 
 def search(request):
+    products_count = 0
+    products = None
     if 'keyword' in request.GET:
         keyword = request.GET['keyword']
         if keyword :

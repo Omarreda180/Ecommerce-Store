@@ -32,8 +32,19 @@
 		<div class="card card-product-grid">
 			<a href={{product.get_prodcut_details_url}} class="img-wrap"> <img src="{{product.image.url}}"> </a>
 			<figcaption class="info-wrap">
-				<a href={{product.get_prodcut_details_url}} class="title">{{product.name}}</a>
+				<h4><a href={{product.get_prodcut_details_url}} class="title">{{product.name}}</a></h4>
 				<div class="price mt-1">${{product.price}}</div> <!-- price-wrap.// -->
+				<br>
+				<div style="font-size:0.5rem" class="rating-star">
+				<span>
+					<i class="fa fa-star{% if product.averageRating < 0.5 %}-o{% elif product.averageRating >= 0.5 and product.averageRating < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+					<i class="fa fa-star{% if product.averageRating < 1.5 %}-o{% elif product.averageRating >= 1.5 and product.averageRating < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+					<i class="fa fa-star{% if product.averageRating < 2.5 %}-o{% elif product.averageRating >= 2.5 and product.averageRating < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+					<i class="fa fa-star{% if product.averageRating < 3.5 %}-o{% elif product.averageRating >= 3.5 and product.averageRating < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+					<i class="fa fa-star{% if product.averageRating < 4.5 %}-o{% elif product.averageRating >= 4.5 and product.averageRating < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+					<span style="font-size:18px">(<b>{{product.countReview}}</b> reviews)</span>
+					</span>
+				</div>
 			</figcaption>
 		</div>
 	</div> <!-- col.// -->
