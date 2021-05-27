@@ -9,7 +9,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = config('DEBUG',default=True, cast=bool)
 
-ALLOWED_HOSTS = ['ecommerce-shop-env.eba-tyuqgtyd.us-west-2.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['ecommerce-shop-env.eba-tyuqgtyd.us-west-2.elasticbeanstalk.com', 'localhost']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
